@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network Security IP Range Scanner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>🛡️ Network Security IP Range Scanner</h1>
+      <p class="subtitle">Discover active hosts in an IP range or CIDR block.</p>
+    </header>
+
+    <div class="warning-banner" role="alert">
+      <strong>⚠️ Authorization Notice:</strong>
+      Only scan networks and IP ranges that you own or are explicitly
+      authorized to test. Unauthorized scanning of third-party networks
+      may be illegal in your jurisdiction and can violate acceptable-use
+      policies. By using this tool you confirm you have permission to
+      scan the target range.
+    </div>
+
+    <main>
+      <section class="card">
+        <form id="scan-form" novalidate>
+          <label for="target">IP Address or CIDR Range</label>
+          <div class="input-row">
+            <input
+              type="text"
+              id="target"
+              name="target"
+              placeholder="e.g. 192.168.1.0/24 or 10.0.0.5"
+              autocomplete="off"
+              required
+            />
+            <button type="submit" id="scan-btn">Scan</button>
+          </div>
+          <p class="hint">
+            Maximum 256 hosts per scan (e.g. a /24 or smaller). Only
+            private/authorized ranges recommended for testing.
+          </p>
+        </form>
+
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <span id="loading-text">Scanning network, please wait…</span>
+        </div>
+
+        <div id="error-box" class="error-box hidden" role="alert"></div>
+      </section>
+
+      <section class="card results-card hidden" id="results-card">
+        <div class="summary" id="summary"></div>
+        <div class="table-wrapper">
+          <table id="results-table">
+            <thead>
+              <tr>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Response Time</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>For authorized security testing and educational use only.</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
